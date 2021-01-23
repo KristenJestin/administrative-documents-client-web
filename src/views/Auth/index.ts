@@ -1,5 +1,5 @@
 // imports
-import Login from './Login.view'
+import Login from './login.view'
 
 // exports
 export { Login }

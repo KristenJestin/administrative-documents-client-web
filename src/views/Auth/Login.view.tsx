@@ -1,10 +1,27 @@
 // imports
-import React from 'react'
+import { AxiosError } from 'axios'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import AppRoute from '../../navigation/app-routes'
+import { ErrorResponse } from '../../models/response.model'
+import AppRoute from '../../navigations/app-routes'
+import { authenticate } from '../../services/auth.service'
 
 // main
 const Login = (): React.ReactElement => {
+	useEffect(() => {
+		;(async () => {
+			try {
+				await authenticate({
+					username: 'test',
+					password: 'test',
+				})
+			} catch (error) {
+				const { response }: AxiosError<ErrorResponse> = error
+				console.log(response?.data.title)
+			}
+		})()
+	}, [])
+
 	return (
 		<section className="hero is-primary is-fullheight">
 			<div className="hero-body">

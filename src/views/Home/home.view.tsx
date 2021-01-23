@@ -7,6 +7,7 @@ const Home = (): React.ReactElement => {
 	return (
 		<MainContainer>
 			<div>HOME</div>
+			<div>HOME</div>
 		</MainContainer>
 	)
 }
