@@ -8,21 +8,17 @@ import { NotFound } from '../views/Home'
 // main
 const Navigator = (): React.ReactElement => (
 	<Router>
-		<section className="section">
-			<div className="container">
-				<Switch>
-					{routes.map((route) => (
-						<Route
-							key={route.path}
-							component={route.component}
-							path={route.path}
-							exact
-						/>
-					))}
-					<Route component={NotFound} />
-				</Switch>
-			</div>
-		</section>
+		<Switch>
+			{routes.map((route) => (
+				<Route
+					key={route.path}
+					component={route.component}
+					path={route.path}
+					exact
+				/>
+			))}
+			<Route component={NotFound} />
+		</Switch>
 	</Router>
 )
 
