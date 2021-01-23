@@ -1,0 +1,19 @@
+.is-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.select,
+.select select {
+	width: 100%;
+}
+
+.label.required {
+	&::after {
+		z-index: 1;
+		content: '*';
+		margin-left: 0.25rem;
+		color: $danger;
+	}
+}
