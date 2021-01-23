@@ -1,6 +1,7 @@
 // imports
 import { RouteComponentProps } from 'react-router-dom'
 import { Home } from '../views/Home'
+import { Login } from '../views/Auth'
 import AppRoute from './app-routes'
 
 // main
@@ -16,6 +17,11 @@ const routes: RouteProps[] = [
 		component: Home,
 		path: AppRoute.HOME,
 		name: 'Home',
+	},
+	{
+		component: Login,
+		path: AppRoute.LOGIN,
+		name: 'Login',
 	},
 ]
 
