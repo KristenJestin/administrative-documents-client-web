@@ -15,9 +15,14 @@ const jsonRequest = <T>(
 	method: Method,
 	url: string,
 	data: any,
-	version: boolean = true
+	version: boolean = true,
+	requireAuth: boolean = true
 ): Promise<AxiosResponse<SuccessResponse<T>>> =>
-	http(version).request<SuccessResponse<T>>({ method, url, data })
+	http(version, requireAuth).request<SuccessResponse<T>>({
+		method,
+		url,
+		data,
+	})
 
 // exports
 export { queryRequest, jsonRequest }

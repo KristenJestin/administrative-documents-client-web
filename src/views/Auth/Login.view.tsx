@@ -1,26 +1,40 @@
 // imports
+import React, { useState } from 'react'
 import { AxiosError } from 'axios'
-import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useAlert } from 'react-alert'
+import { useHistory } from 'react-router-dom'
+
 import { ErrorResponse } from '../../models/response.model'
-import AppRoute from '../../navigations/app-routes'
 import { authenticate } from '../../services/auth.service'
+import { useAuth } from '../../contexts/auth.context'
+import AppRoute from '../../navigations/app-routes'
 
 // main
 const Login = (): React.ReactElement => {
-	useEffect(() => {
-		;(async () => {
-			try {
-				await authenticate({
-					username: 'test',
-					password: 'test',
-				})
-			} catch (error) {
-				const { response }: AxiosError<ErrorResponse> = error
-				console.log(response?.data.title)
-			}
-		})()
-	}, [])
+	// hooks
+	const [username, setUsername] = useState('')
+	const [password, setPassword] = useState('')
+	const alert = useAlert()
+	const { setUser } = useAuth()
+	const history = useHistory()
+
+	// actions
+	const clickLogin = async () => {
+		try {
+			const response = await authenticate({
+				username,
+				password,
+			})
+			setUser(response.data.result)
+			alert.success(`Vous êtes maintenant connecté!`)
+			history.push(AppRoute.HOME)
+		} catch (error) {
+			const { response }: AxiosError<ErrorResponse> = error
+			alert.error(
+				`Les informations de connexion ne sont pas valides (${response?.data?.title}).`
+			)
+		}
+	}
 
 	return (
 		<section className="hero is-primary is-fullheight">
@@ -31,16 +45,19 @@ const Login = (): React.ReactElement => {
 					</h1>
 					<div className="columns is-centered">
 						<div className="column is-5-tablet is-4-desktop is-3-widescreen">
-							<form action="" className="box">
+							<div className="box">
 								<div className="field">
 									<label htmlFor="" className="label">
 										Email
 									</label>
 									<div className="control has-icons-left">
 										<input
-											type="email"
 											placeholder="e.g. bobsmith@gmail.com"
 											className="input is-hovered"
+											value={username}
+											onChange={(e) =>
+												setUsername(e.target.value)
+											}
 										/>
 										<span className="icon is-small is-left">
 											<i className="fas fa-envelope"></i>
@@ -56,6 +73,10 @@ const Login = (): React.ReactElement => {
 											type="password"
 											placeholder="*******"
 											className="input is-hovered"
+											value={password}
+											onChange={(e) =>
+												setPassword(e.target.value)
+											}
 										/>
 										<span className="icon is-small is-left">
 											<i className="fas fa-lock"></i>
@@ -73,13 +94,13 @@ const Login = (): React.ReactElement => {
 									</label>
 								</div>
 								<div className="field">
-									<Link
-										to={AppRoute.HOME}
-										className="button is-success">
+									<button
+										className="button is-success"
+										onClick={clickLogin}>
 										Login
-									</Link>
+									</button>
 								</div>
-							</form>
+							</div>
 						</div>
 					</div>
 				</div>
