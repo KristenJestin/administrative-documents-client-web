@@ -1,15 +1,15 @@
 // imports
 import { createContext, useContext } from 'react'
-import { AuthenticateResponse } from '../models/account'
+import { AuthCookie } from '../models/account/auth-cookie.model'
 
 // main
 type AuthContextProps = {
-	user: AuthenticateResponse | null
-	setUser: (user: AuthenticateResponse) => void
+	authToken: AuthCookie | null
+	setAuthToken: (token: AuthCookie) => void
 }
 const AuthContext = createContext<AuthContextProps>({
-	user: null,
-	setUser: () => {},
+	authToken: null,
+	setAuthToken: () => {},
 })
 
 const useAuth = () => useContext(AuthContext)

@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom'
 
 import { ErrorResponse } from '../../models/response.model'
 import { authenticate } from '../../services/auth.service'
-import { useAuth } from '../../contexts/auth.context'
+import { useAuth } from '../../hooks/auth.context'
 import AppRoute from '../../navigations/app-routes'
 
 // main
@@ -15,7 +15,7 @@ const Login = (): React.ReactElement => {
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
 	const alert = useAlert()
-	const { setUser } = useAuth()
+	const { setAuthToken } = useAuth()
 	const history = useHistory()
 
 	// actions
@@ -25,7 +25,11 @@ const Login = (): React.ReactElement => {
 				username,
 				password,
 			})
-			setUser(response.data.result)
+			const result = response.data.result
+			setAuthToken({
+				value: result.jwtToken,
+				expires: result.expires,
+			})
 			alert.success(`Vous êtes maintenant connecté!`)
 			history.push(AppRoute.HOME)
 		} catch (error) {

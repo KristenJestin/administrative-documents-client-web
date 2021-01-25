@@ -9,15 +9,15 @@ import {
 
 import routes from './routes'
 import { NotFound } from '../views/Home'
-import { Login } from '../views/Auth'
-import { useAuth } from '../contexts/auth.context'
+import { useAuth } from '../hooks/auth.context'
 import AppRoute from './app-routes'
 
 // main
 const Navigator = (): React.ReactElement => {
-	const { user } = useAuth()
+	const { authToken } = useAuth()
 	return (
 		<Router>
+			{!authToken && <Redirect to={{ pathname: AppRoute.LOGIN }} />}
 			<Switch>
 				{routes.map((route) => (
 					<Route
@@ -29,7 +29,6 @@ const Navigator = (): React.ReactElement => {
 				))}
 				<Route component={NotFound} />
 			</Switch>
-			{!user && <Redirect to={{ pathname: AppRoute.LOGIN }} />}
 		</Router>
 	)
 }
