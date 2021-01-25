@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import { Home } from '../views/Home'
 import { Login } from '../views/Auth'
 import AppRoute from './app-routes'
+import { Documents } from '../views/Documents'
 
 // main
 type RouteProps = {
@@ -22,6 +23,11 @@ const routes: RouteProps[] = [
 		component: Login,
 		path: AppRoute.LOGIN,
 		name: 'Login',
+	},
+	{
+		component: Documents,
+		path: AppRoute.DOCUMENTS,
+		name: 'Documents',
 	},
 ]
 

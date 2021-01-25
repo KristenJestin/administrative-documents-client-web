@@ -5,6 +5,7 @@ import {
 	Redirect,
 	Route,
 	Switch,
+	useHistory,
 } from 'react-router-dom'
 
 import routes from './routes'
@@ -14,7 +15,10 @@ import AppRoute from './app-routes'
 
 // main
 const Navigator = (): React.ReactElement => {
+	// hooks
 	const { authToken } = useAuth()
+
+	// render
 	return (
 		<Router>
 			{!authToken && <Redirect to={{ pathname: AppRoute.LOGIN }} />}
