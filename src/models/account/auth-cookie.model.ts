@@ -1,5 +1,4 @@
 // main
-const authCookieName = 'token'
 interface AuthCookie {
 	value: string
 	expires: string
@@ -7,4 +6,3 @@ interface AuthCookie {
 
 // exports
 export type { AuthCookie }
-export { authCookieName }

@@ -3,23 +3,26 @@ import { AxiosResponse } from 'axios'
 import { jsonRequest } from '../common/helpers/api.helper'
 import { UrlJoin } from '../common/helpers/url.helper'
 import { AuthenticateRequest, AuthenticateResponse } from '../models/account/'
-import { AuthCookie, authCookieName } from '../models/account/auth-cookie.model'
+import { AuthCookie } from '../models/account/auth-cookie.model'
 import { SuccessResponse } from '../models/response.model'
 
 // config
 const url = '/accounts'
 
 // main
-const storeAuthenticateUser = (user: AuthCookie) =>
-	localStorage.setItem(authCookieName, JSON.stringify(user))
+const authCookieName = 'token'
+const authLocalStorageName = 'token'
 
-const getAuthenticateUser = (): AuthCookie | null => {
-	const stored = localStorage.getItem(authCookieName)
+const storeAuthenticateToken = (user: AuthCookie) =>
+	localStorage.setItem(authLocalStorageName, JSON.stringify(user))
+
+const getAuthenticateToken = (): AuthCookie | null => {
+	const stored = localStorage.getItem(authLocalStorageName)
 	if (stored) return JSON.parse(stored)
 	return null
 }
 
-const isAuthenticated = () => getAuthenticateUser() != null
+const isAuthenticated = () => getAuthenticateToken() != null
 
 const authenticate = (
 	data: AuthenticateRequest
@@ -28,8 +31,10 @@ const authenticate = (
 
 // exports
 export {
-	storeAuthenticateUser,
-	getAuthenticateUser,
+	storeAuthenticateToken,
+	getAuthenticateToken,
 	isAuthenticated,
 	authenticate,
+	authCookieName,
+	authLocalStorageName,
 }

@@ -14,7 +14,7 @@ const queryRequest = <T>(
 const jsonRequest = <T>(
 	method: Method,
 	url: string,
-	data: any,
+	data: any = undefined,
 	version: boolean = true,
 	requireAuth: boolean = true
 ): Promise<AxiosResponse<SuccessResponse<T>>> =>

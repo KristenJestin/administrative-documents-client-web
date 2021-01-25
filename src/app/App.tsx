@@ -6,16 +6,16 @@ import { AuthContext } from '../hooks/auth.context'
 import { AuthCookie } from '../models/account/auth-cookie.model'
 import Navigator from '../navigations/navigator'
 import {
-	getAuthenticateUser,
-	storeAuthenticateUser,
+	getAuthenticateToken,
+	storeAuthenticateToken,
 } from '../services/auth.service'
 
 const App = (): React.ReactElement => {
 	const [authToken, setAuthToken] = useState<AuthCookie | null>(
-		getAuthenticateUser()
+		getAuthenticateToken()
 	)
 	const setTokens = (token: AuthCookie) => {
-		storeAuthenticateUser(token)
+		storeAuthenticateToken(token)
 		setAuthToken(token)
 	}
 
