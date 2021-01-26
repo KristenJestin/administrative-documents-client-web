@@ -1,5 +1,7 @@
+// imports
 import React from 'react'
 
+// main
 const NotFound = (): React.ReactElement => (
 	<div className="has-text-centered">
 		<span
@@ -11,4 +13,5 @@ const NotFound = (): React.ReactElement => (
 	</div>
 )
 
+// exports
 export default NotFound

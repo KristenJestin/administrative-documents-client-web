@@ -1,7 +1,16 @@
+// imports
 import React from 'react'
+import MainContainer from '../../components/main-container.component'
 
+// main
 const Home = (): React.ReactElement => {
-	return <div>HOME</div>
+	return (
+		<MainContainer>
+			<div>HOME</div>
+			<div>HOME</div>
+		</MainContainer>
+	)
 }
 
+// exports
 export default Home
