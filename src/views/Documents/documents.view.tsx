@@ -5,16 +5,28 @@ import MainContainer from '../../components/main-container.component'
 import Document from '../../models/document/document.model'
 import service from '../../services/document.service'
 
+// config
+type DocumentsState = {
+	documents: Document[]
+	loading: boolean
+}
+
 // main
 const Documents = (): React.ReactElement => {
 	// hooks
-	const [documents, setDocuments] = useState<Document[]>([])
+	const [pageState, setPageState] = useState<DocumentsState>({
+		documents: [],
+		loading: true,
+	})
 
 	// actions
 	useEffect(() => {
 		;(async () => {
-			const doc = await (await service.find(1)).data.result
-			setDocuments((docs) => [...docs, doc])
+			const docs = (await service.latest()).data.result
+			setPageState(() => ({
+				documents: docs,
+				loading: false,
+			}))
 		})()
 	}, [])
 
@@ -22,12 +34,17 @@ const Documents = (): React.ReactElement => {
 	return (
 		<MainContainer title="Derniers Documents">
 			<div>
-				{documents.map((doc, index) => (
-					<div className="card mb-4">
-						<div key={index} className="card-content">
+				{pageState.loading && (
+					<div className="is-center mt-6">
+						<div className="loader"></div>
+					</div>
+				)}
+				{pageState?.documents?.map((doc, index) => (
+					<div key={index} className="card mb-4">
+						<div className="card-content">
 							<div className="media">
 								<div
-									className="media-left"
+									className="media-left mr-5"
 									style={{
 										marginTop: 'auto',
 										marginBottom: 'auto',
@@ -52,20 +69,22 @@ const Documents = (): React.ReactElement => {
 									</div>
 									<nav className="level is-mobile">
 										<div className="level-left">
-											<a className="level-item">
-												<span className="icon is-small">
-													<i className="fas fa-reply"></i>
-												</span>
+											<div className="tags">
+												{doc.tags?.map((tag, index) => (
+													<a
+														key={index}
+														className="tag is-primary">
+														{tag.name}
+													</a>
+												))}
+											</div>
+										</div>
+										<div className="level-right">
+											<a className="level-item button is-light">
+												Afficher le dossier
 											</a>
-											<a className="level-item">
-												<span className="icon is-small">
-													<i className="fas fa-retweet"></i>
-												</span>
-											</a>
-											<a className="level-item">
-												<span className="icon is-small">
-													<i className="fas fa-heart"></i>
-												</span>
+											<a className="level-item button is-link">
+												Détails
 											</a>
 										</div>
 									</nav>
