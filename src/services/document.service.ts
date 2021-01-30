@@ -9,11 +9,12 @@ import { SuccessResponse } from '../models/response.model'
 const url = '/documents'
 
 // main
-const getlast = () => null
-
 const find = (id: number): Promise<AxiosResponse<SuccessResponse<Document>>> =>
 	jsonRequest('GET', UrlJoin(url, id.toString()))
 
+const latest = (): Promise<AxiosResponse<SuccessResponse<Document[]>>> =>
+	jsonRequest('GET', UrlJoin(url, 'latest'))
+
 // exports
-const service = { find }
+const service = { find, latest }
 export default service
