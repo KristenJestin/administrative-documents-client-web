@@ -17,8 +17,14 @@ const MainContainer = ({
 		<section className="section">
 			<div className="container">
 				<div>
-					{title && <h1 className="title is-uppercase">{title}</h1>}
-					{subtitle && <h2 className="subtitle">{subtitle}</h2>}
+					{title && (
+						<h1 className="title is-uppercase has-text-grey-darker">
+							{title}
+						</h1>
+					)}
+					{subtitle && (
+						<h2 className="subtitle has-text-grey">{subtitle}</h2>
+					)}
 				</div>
 				<div className="mt-5">{children}</div>
 			</div>

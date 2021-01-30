@@ -1,10 +1,8 @@
 // imports
-import axios, { AxiosInstance, AxiosResponse } from 'axios'
+import axios, { AxiosInstance } from 'axios'
 import { getAuthenticateToken } from '../services/auth.service'
 import { storeAuthenticateToken } from '../services/auth.service'
 import { UrlJoin } from './helpers/url.helper'
-import { SuccessResponse } from '../models/response.model'
-import { AuthenticateResponse } from '../models/account'
 
 // main
 const http = (

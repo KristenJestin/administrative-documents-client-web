@@ -1,6 +1,6 @@
 // imports
-import DocumentTag from './document-tag.model'
-import DocumentType from './document-type.model'
+import DocumentTag from '../document-tag/document-tag.model'
+import DocumentType from '../document-type/document-type.model'
 
 // main
 interface Document {
