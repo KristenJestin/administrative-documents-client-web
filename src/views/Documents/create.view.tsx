@@ -30,11 +30,27 @@ const CreateDocument = (): React.ReactElement => {
 						as={
 							<Field
 								label="Nom"
+								icon="fas fa-signature"
 								placeholder="Nom du document"
 								error={errors.name}
 							/>
 						}
 						name="name"
+						defaultValue=""
+						control={control}
+					/>
+					<Controller
+						as={
+							<Field
+								label="Date"
+								type="date"
+								icon="fas fa-calendar-day"
+								placeholder="Date de réception du document"
+								error={errors.date}
+							/>
+						}
+						name="date"
+						defaultValue={Date.now}
 						control={control}
 					/>
 
