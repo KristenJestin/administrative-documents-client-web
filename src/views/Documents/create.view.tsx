@@ -1,5 +1,5 @@
 // imports
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
@@ -9,6 +9,8 @@ import {
 	CreateDocumentData,
 	createDocumentSchema,
 } from '../../models/document/create-document.model'
+import DocumentType from '../../models/document-type/document-type.model'
+import DocumentTypeService from '../../services/document-type.service'
 
 // main
 const CreateDocument = (): React.ReactElement => {
@@ -17,8 +19,17 @@ const CreateDocument = (): React.ReactElement => {
 		mode: 'onBlur',
 		resolver: yupResolver(createDocumentSchema),
 	})
+	const [documentTypes, setDocumentTypes] = useState<DocumentType[]>([])
 
-	// actions
+	// events
+	useEffect(() => {
+		;(async () => {
+			const types = (await DocumentTypeService.all()).data.result
+			setDocumentTypes(() => types)
+		})()
+	}, [])
+
+	// methods
 	const onSubmit = (data: CreateDocumentData) => console.log(data)
 
 	// render
@@ -36,6 +47,36 @@ const CreateDocument = (): React.ReactElement => {
 							/>
 						}
 						name="name"
+						defaultValue=""
+						control={control}
+					/>
+					<Controller
+						as={
+							<Field
+								label="Type"
+								type="select"
+								data={documentTypes.map((type) => ({
+									id: type.id,
+									text: type.name,
+								}))}
+								placeholder="Selectionner le type de document"
+								error={errors.type}
+							/>
+						}
+						name="type"
+						defaultValue=""
+						control={control}
+					/>
+					<Controller
+						as={
+							<Field
+								label="Note"
+								type="textarea"
+								placeholder="Ajouter une note au document"
+								error={errors.note}
+							/>
+						}
+						name="note"
 						defaultValue=""
 						control={control}
 					/>

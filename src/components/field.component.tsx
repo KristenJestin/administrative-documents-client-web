@@ -5,12 +5,18 @@ import Flatpickr from 'react-flatpickr'
 import { French } from 'flatpickr/dist/l10n/fr'
 
 // main
+type FieldDataProps = {
+	id: number | string
+	text: string
+}
+
 type FieldProps = {
 	label: string
 	type?: string
 	placeholder?: string
 	icon?: string
 	error?: FieldError
+	data?: FieldDataProps[]
 
 	onChange?: (...event: any[]) => void
 	onBlur?: () => void
@@ -18,7 +24,10 @@ type FieldProps = {
 	name?: string
 }
 
-const Field = React.forwardRef<HTMLInputElement, FieldProps>(
+const Field = React.forwardRef<
+	HTMLInputElement | HTMLSelectElement,
+	FieldProps
+>(
 	(
 		{
 			label,
@@ -26,12 +35,13 @@ const Field = React.forwardRef<HTMLInputElement, FieldProps>(
 			placeholder = undefined,
 			icon = undefined,
 			error = undefined,
+			data = undefined,
 			onChange,
 			onBlur,
 			value,
 			name,
 		},
-		ref
+		_ref
 	) => {
 		// methods
 		const renderInput = () => {
@@ -58,6 +68,43 @@ const Field = React.forwardRef<HTMLInputElement, FieldProps>(
 							}}
 						/>
 					)
+				case 'select':
+					return (
+						<div
+							className={`select ${
+								data && data.length ? '' : ' is-loading'
+							}`}>
+							<select
+								name={name}
+								onChange={onChange}
+								onBlur={onBlur}
+								value={value}>
+								{placeholder && (
+									<option id="" className="has-text-grey">
+										{placeholder}
+									</option>
+								)}
+								{data?.map((value) => (
+									<option key={value.id} value={value.id}>
+										{value.text}
+									</option>
+								))}
+							</select>
+						</div>
+					)
+				case 'textarea':
+					return (
+						<textarea
+							name={name}
+							className={`textarea ${
+								error !== undefined ? 'is-danger' : ''
+							}`}
+							placeholder={placeholder}
+							onChange={onChange}
+							onBlur={onBlur}
+							value={value}
+						/>
+					)
 
 				default:
 					return (
@@ -71,7 +118,6 @@ const Field = React.forwardRef<HTMLInputElement, FieldProps>(
 							onChange={onChange}
 							onBlur={onBlur}
 							value={value}
-							ref={ref}
 						/>
 					)
 			}
