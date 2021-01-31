@@ -3,7 +3,13 @@ import React, { useState, useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
-import Field from '../../components/field.component'
+import {
+	DatePicker,
+	Field,
+	Input,
+	Select,
+	TextArea,
+} from '../../components/form'
 import MainContainer from '../../components/main-container.component'
 import {
 	CreateDocumentData,
@@ -37,63 +43,61 @@ const CreateDocument = (): React.ReactElement => {
 		<MainContainer title="Ajouter un nouveau Documents">
 			<div>
 				<form onSubmit={handleSubmit(onSubmit)}>
-					<Controller
-						as={
-							<Field
-								label="Nom"
-								icon="fas fa-signature"
-								placeholder="Nom du document"
-								error={errors.name}
-							/>
-						}
-						name="name"
-						defaultValue=""
-						control={control}
-					/>
-					<Controller
-						as={
-							<Field
-								label="Type"
-								type="select"
-								data={documentTypes.map((type) => ({
-									id: type.id,
-									text: type.name,
-								}))}
-								placeholder="Selectionner le type de document"
-								error={errors.type}
-							/>
-						}
-						name="type"
-						defaultValue=""
-						control={control}
-					/>
-					<Controller
-						as={
-							<Field
-								label="Note"
-								type="textarea"
-								placeholder="Ajouter une note au document"
-								error={errors.note}
-							/>
-						}
-						name="note"
-						defaultValue=""
-						control={control}
-					/>
-					<Controller
-						as={
-							<Field
-								label="Date"
-								type="date"
-								icon="fas fa-calendar-day"
-								placeholder="Date de réception du document"
-								error={errors.date}
-							/>
-						}
-						name="date"
-						defaultValue={Date.now}
-						control={control}
-					/>
+					<Field
+						label="Nom"
+						icon="fas fa-signature"
+						error={errors.name}>
+						<Controller
+							as={<Input placeholder="Nom du document" />}
+							name="name"
+							defaultValue=""
+							control={control}
+							error={errors.name}
+						/>
+					</Field>
+					<Field label="Type" error={errors.type}>
+						<Controller
+							as={
+								<Select
+									placeholder="Selectionner le type de document"
+									data={documentTypes.map((type) => ({
+										id: type.id,
+										text: type.name,
+									}))}
+								/>
+							}
+							name="type"
+							defaultValue=""
+							control={control}
+							error={errors.type}
+						/>
+					</Field>
+
+					<Field label="Note" error={errors.note}>
+						<Controller
+							as={
+								<TextArea placeholder="Ajouter une note au document" />
+							}
+							name="note"
+							defaultValue=""
+							control={control}
+							error={errors.note}
+						/>
+					</Field>
+					<Field
+						label="Date"
+						icon="fas fa-calendar-day"
+						error={errors.date}>
+						<Controller
+							as={
+								<DatePicker placeholder="Date de réception du document" />
+							}
+							name="date"
+							defaultValue={Date.now}
+							control={control}
+							error={errors.date}
+						/>
+					</Field>
 
 					<div className="field is-grouped">
 						<div className="control">
