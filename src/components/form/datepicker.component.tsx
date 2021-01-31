@@ -30,13 +30,14 @@ const DatePicker = React.forwardRef<Flatpickr, DatePickerProps>(
 			className={`input ${error !== undefined ? 'is-danger' : ''}`}
 			placeholder={placeholder}
 			onChange={onChange}
-			onblur={onBlur}
+			onClose={onBlur}
 			value={value}
 			options={{
 				...{
 					locale: French,
 					altInput: true,
 					altFormat: 'd F Y',
+					defaultDate: undefined,
 				},
 				...options,
 			}}

@@ -1,7 +1,8 @@
 // imports
 import React, { useState, useEffect } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { Controller, FieldError, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { startOfToday } from 'date-fns'
 
 import {
 	DatePicker,
@@ -9,6 +10,7 @@ import {
 	Input,
 	Select,
 	TextArea,
+	InputTags,
 } from '../../components/form'
 import MainContainer from '../../components/main-container.component'
 import {
@@ -24,6 +26,13 @@ const CreateDocument = (): React.ReactElement => {
 	const { control, handleSubmit, errors } = useForm<CreateDocumentData>({
 		mode: 'onBlur',
 		resolver: yupResolver(createDocumentSchema),
+		defaultValues: {
+			name: '',
+			type: undefined,
+			note: '',
+			date: startOfToday(),
+			tags: [],
+		},
 	})
 	const [documentTypes, setDocumentTypes] = useState<DocumentType[]>([])
 
@@ -36,7 +45,9 @@ const CreateDocument = (): React.ReactElement => {
 	}, [])
 
 	// methods
-	const onSubmit = (data: CreateDocumentData) => console.log(data)
+	const onSubmit = (data: CreateDocumentData) => {
+		console.log(data)
+	}
 
 	// render
 	return (
@@ -50,7 +61,6 @@ const CreateDocument = (): React.ReactElement => {
 						<Controller
 							as={<Input placeholder="Nom du document" />}
 							name="name"
-							defaultValue=""
 							control={control}
 							error={errors.name}
 						/>
@@ -79,7 +89,6 @@ const CreateDocument = (): React.ReactElement => {
 								<TextArea placeholder="Ajouter une note au document" />
 							}
 							name="note"
-							defaultValue=""
 							control={control}
 							error={errors.note}
 						/>
@@ -93,9 +102,21 @@ const CreateDocument = (): React.ReactElement => {
 								<DatePicker placeholder="Date de réception du document" />
 							}
 							name="date"
-							defaultValue={Date.now}
 							control={control}
 							error={errors.date}
+						/>
+					</Field>
+					<Field
+						label="Tags"
+						icon="fas fa-tags"
+						error={errors.tags as FieldError | undefined}>
+						<Controller
+							as={
+								<InputTags placeholder="Tous les tags liés au document" />
+							}
+							name="tags"
+							control={control}
+							error={errors.tags}
 						/>
 					</Field>
 

@@ -4,6 +4,7 @@ import Input from './input.component'
 import TextArea from './textarea.component'
 import Select from './select.component'
 import DatePicker from './datepicker.component'
+import InputTags from './input-tags.component'
 
 // exports
-export { Field, Input, TextArea, Select, DatePicker }
+export { Field, Input, TextArea, Select, DatePicker, InputTags }

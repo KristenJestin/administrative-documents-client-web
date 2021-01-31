@@ -38,7 +38,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
 				value={value}
 				ref={ref}>
 				{placeholder && (
-					<option id="" className="has-text-grey">
+					<option value={undefined} className="has-text-grey">
 						{placeholder}
 					</option>
 				)}
