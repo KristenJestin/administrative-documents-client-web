@@ -1,5 +1,5 @@
 // imports
-import { SchemaOf, object, string, date, number, array } from 'yup'
+import { SchemaOf, object, string, date, number, array, mixed } from 'yup'
 import { endOfTomorrow } from 'date-fns'
 
 // main
@@ -8,21 +8,27 @@ type CreateDocumentData = {
 	type?: number
 	note?: string
 	tags: string[]
+	file?: File
 	date?: Date
 }
 
 const createDocumentSchema: SchemaOf<CreateDocumentData> = object({
 	name: string().required().trim().min(3).max(100),
 	type: number()
-		.transform((v) =>
-			v === '' || v === undefined || isNaN(v) ? undefined : v
+		.transform((val) =>
+			val === '' || val === undefined || isNaN(val) ? undefined : val
 		)
 		.positive(),
 	note: string()
-		.transform((v) => (v === null || v === '' ? undefined : v))
+		.transform((val) => (val === null || val === '' ? undefined : val))
 		.notRequired()
 		.max(1000),
 	tags: array().of(string()).required().max(8).ensure(),
+	file: mixed<File>()
+		.required()
+		.test('fileSize', 'Le fichier est trop volumineux', (val) =>
+			val ? val.size <= 2000000 : true
+		),
 	date: date()
 		.transform((v) =>
 			v === null ||

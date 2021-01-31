@@ -1,5 +1,5 @@
 // imports
-import React from 'react'
+import React, { ChangeEvent, FocusEvent } from 'react'
 import TagsInput, { RenderTagProps, RenderInputProps } from 'react-tagsinput'
 
 import DefaultElementProps from './default.props'
@@ -12,12 +12,7 @@ const KeyCodes = {
 	enter: 13,
 }
 
-const delimiters = [
-	KeyCodes.tab,
-	KeyCodes.semicolon,
-	KeyCodes.comma,
-	KeyCodes.enter,
-]
+const delimiters = [KeyCodes.tab, KeyCodes.comma, KeyCodes.enter]
 
 // main
 type InputTagsProps = {
@@ -64,20 +59,32 @@ const InputTags = React.forwardRef<HTMLInputElement, InputTagsProps>(
 			</div>
 		)
 		const defaultRenderInput = ({
-			onChange,
+			onChange: onInputChange,
+			onBlur: onInputBlur,
 			value,
 			addTag,
+			ref: _ref,
 			...other
-		}: RenderInputProps<string>) => (
-			<input
-				{...other}
-				type="text"
-				onChange={onChange}
-				value={value}
-				ref={ref}
-				onBlur={onBlur}
-			/>
-		)
+		}: RenderInputProps<string>) => {
+			// methods
+			const onCustomBlur = (e: FocusEvent<HTMLInputElement>) => {
+				onInputBlur(e)
+				if (onBlur) onBlur()
+			}
+
+			// render
+			return (
+				<input
+					name={name}
+					type="text"
+					onChange={onInputChange}
+					onBlur={onCustomBlur}
+					value={value}
+					ref={ref}
+					{...other}
+				/>
+			)
+		}
 
 		const defaultRenderLayout = (
 			tagComponents: React.ReactElement[],
@@ -93,31 +100,26 @@ const InputTags = React.forwardRef<HTMLInputElement, InputTagsProps>(
 
 		// render
 		return (
-			<>
-				<TagsInput<string>
-					value={value}
-					onChange={(tags) => onChange && onChange(tags)}
-					addKeys={delimiters}
-					className={`input ${
-						error !== undefined ? 'is-danger' : ''
-					}`}
-					focusedClassName="is-focused"
-					onlyUnique={onlyUnique}
-					inputProps={{
-						className: 'tags-input',
-						placeholder,
-					}}
-					maxTags={maxTags ? maxTags : -1}
-					tagProps={{
-						className: 'control',
-						classNameRemove: 'tag is-delete is-clickable',
-					}}
-					renderTag={defaultRenderTag}
-					renderInput={defaultRenderInput}
-					renderLayout={defaultRenderLayout}
-				/>
-				<input type="hidden" name={name} value={value} />
-			</>
+			<TagsInput<string>
+				value={value}
+				onChange={(tags) => onChange && onChange(tags)}
+				addKeys={delimiters}
+				className={`input ${error !== undefined ? 'is-danger' : ''}`}
+				focusedClassName="is-focused"
+				onlyUnique={onlyUnique}
+				inputProps={{
+					className: 'tags-input',
+					placeholder,
+				}}
+				maxTags={maxTags ? maxTags : -1}
+				tagProps={{
+					className: 'control',
+					classNameRemove: 'tag is-delete is-clickable',
+				}}
+				renderTag={defaultRenderTag}
+				renderInput={defaultRenderInput}
+				renderLayout={defaultRenderLayout}
+			/>
 		)
 	}
 )

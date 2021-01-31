@@ -1,6 +1,6 @@
 // imports
 import React, { useState, useEffect } from 'react'
-import { Controller, FieldError, useForm } from 'react-hook-form'
+import { Controller, FieldError, FormProvider, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { startOfToday } from 'date-fns'
 
@@ -11,6 +11,7 @@ import {
 	Select,
 	TextArea,
 	InputTags,
+	InputFile,
 } from '../../components/form'
 import MainContainer from '../../components/main-container.component'
 import {
@@ -23,7 +24,7 @@ import DocumentTypeService from '../../services/document-type.service'
 // main
 const CreateDocument = (): React.ReactElement => {
 	// hooks
-	const { control, handleSubmit, errors } = useForm<CreateDocumentData>({
+	const methods = useForm<CreateDocumentData>({
 		mode: 'onBlur',
 		resolver: yupResolver(createDocumentSchema),
 		defaultValues: {
@@ -35,6 +36,9 @@ const CreateDocument = (): React.ReactElement => {
 		},
 	})
 	const [documentTypes, setDocumentTypes] = useState<DocumentType[]>([])
+
+	// data
+	const { control, handleSubmit, errors } = methods
 
 	// events
 	useEffect(() => {
@@ -53,88 +57,102 @@ const CreateDocument = (): React.ReactElement => {
 	return (
 		<MainContainer title="Ajouter un nouveau Documents">
 			<div>
-				<form onSubmit={handleSubmit(onSubmit)}>
-					<Field
-						label="Nom"
-						icon="fas fa-signature"
-						error={errors.name}>
-						<Controller
-							as={<Input placeholder="Nom du document" />}
-							name="name"
-							control={control}
-							error={errors.name}
-						/>
-					</Field>
-					<Field label="Type" error={errors.type}>
-						<Controller
-							as={
-								<Select
-									placeholder="Selectionner le type de document"
-									data={documentTypes.map((type) => ({
-										id: type.id,
-										text: type.name,
-									}))}
-								/>
-							}
-							name="type"
-							defaultValue=""
-							control={control}
-							error={errors.type}
-						/>
-					</Field>
+				<FormProvider {...methods}>
+					<form onSubmit={handleSubmit(onSubmit)}>
+						<Field
+							label="Nom"
+							icon="fas fa-signature"
+							error={errors.name}>
+							<Controller
+								as={<Input placeholder="Nom du document" />}
+								name="name"
+								control={control}
+								error={errors.name}
+							/>
+						</Field>
+						<Field label="Type" error={errors.type}>
+							<Controller
+								as={
+									<Select
+										placeholder="Selectionner le type de document"
+										data={documentTypes.map((type) => ({
+											id: type.id,
+											text: type.name,
+										}))}
+									/>
+								}
+								name="type"
+								defaultValue=""
+								control={control}
+								error={errors.type}
+							/>
+						</Field>
 
-					<Field label="Note" error={errors.note}>
-						<Controller
-							as={
-								<TextArea placeholder="Ajouter une note au document" />
-							}
-							name="note"
-							control={control}
-							error={errors.note}
-						/>
-					</Field>
-					<Field
-						label="Date"
-						icon="fas fa-calendar-day"
-						error={errors.date}>
-						<Controller
-							as={
-								<DatePicker placeholder="Date de réception du document" />
-							}
-							name="date"
-							control={control}
-							error={errors.date}
-						/>
-					</Field>
-					<Field
-						label="Tags"
-						icon="fas fa-tags"
-						error={errors.tags as FieldError | undefined}>
-						<Controller
-							as={
-								<InputTags placeholder="Tous les tags liés au document" />
-							}
-							name="tags"
-							control={control}
-							error={errors.tags}
-						/>
-					</Field>
+						<Field label="Note" error={errors.note}>
+							<Controller
+								as={
+									<TextArea placeholder="Ajouter une note au document" />
+								}
+								name="note"
+								control={control}
+								error={errors.note}
+							/>
+						</Field>
+						<Field
+							label="Tags"
+							icon="fas fa-tags"
+							error={errors.tags as FieldError | undefined}>
+							<Controller
+								as={
+									<InputTags placeholder="Tous les tags liés au document" />
+								}
+								name="tags"
+								control={control}
+								error={errors.tags}
+							/>
+						</Field>
+						<Field
+							label="Fichier"
+							error={errors.file as FieldError | undefined}>
+							<Controller
+								as={<InputFile placeholder="Fichier" />}
+								name="file"
+								control={control}
+								error={errors.file}
+							/>
+						</Field>
+						<Field
+							label="Date"
+							icon="fas fa-calendar-day"
+							error={errors.date}>
+							<Controller
+								as={
+									<DatePicker placeholder="Date de réception du document" />
+								}
+								name="date"
+								control={control}
+								error={errors.date}
+							/>
+						</Field>
 
-					<div className="field is-grouped">
-						<div className="control">
-							<button type="submit" className="button is-link">
-								Ajouter
-							</button>
+						<div className="field is-grouped">
+							<div className="control">
+								<button
+									type="submit"
+									className="button is-link">
+									Ajouter
+								</button>
+							</div>
+							<div className="control">
+								<button
+									type="button"
+									className="button is-link is-light">
+									Annuler
+								</button>
+							</div>
 						</div>
-						<div className="control">
-							<button
-								type="button"
-								className="button is-link is-light">
-								Annuler
-							</button>
-						</div>
-					</div>
-				</form>
+					</form>
+				</FormProvider>
 			</div>
 		</MainContainer>
 	)
