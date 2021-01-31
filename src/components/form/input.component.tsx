@@ -7,6 +7,7 @@ import DefaultElementProps from './default.props'
 type InputProps = {
 	placeholder?: string
 	type?: string
+	step?: string
 } & DefaultElementProps
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -15,6 +16,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 			placeholder = undefined,
 			error = undefined,
 			type = undefined,
+			step = undefined,
 			onChange,
 			onBlur,
 			value,
@@ -31,6 +33,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 			onBlur={onBlur}
 			value={value}
 			ref={ref}
+			step={step}
 		/>
 	)
 )

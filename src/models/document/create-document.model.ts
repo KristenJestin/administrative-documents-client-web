@@ -10,6 +10,8 @@ type CreateDocumentData = {
 	tags: string[]
 	file?: File
 	date?: Date
+	amount?: number
+	duration?: number
 }
 
 const createDocumentSchema: SchemaOf<CreateDocumentData> = object({
@@ -41,6 +43,16 @@ const createDocumentSchema: SchemaOf<CreateDocumentData> = object({
 		.notRequired()
 		.min(new Date(+0))
 		.max(endOfTomorrow()),
+	amount: number()
+		.transform((val) =>
+			val === '' || val === undefined || isNaN(val) ? undefined : val
+		)
+		.positive(),
+	duration: number()
+		.transform((val) =>
+			val === '' || val === undefined || isNaN(val) ? undefined : val
+		)
+		.positive(),
 }).defined()
 
 // exports
