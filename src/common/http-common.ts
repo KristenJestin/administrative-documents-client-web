@@ -7,7 +7,8 @@ import { UrlJoin } from './helpers/url.helper'
 // main
 const http = (
 	version: boolean = true,
-	requireAuth: boolean = true
+	requireAuth: boolean = true,
+	contentType: string = 'application/json'
 ): AxiosInstance => {
 	const instance = axios.create({
 		baseURL: UrlJoin(
@@ -15,7 +16,7 @@ const http = (
 			version ? process.env.REACT_APP_API_VERSION : ''
 		),
 		headers: {
-			'Content-type': 'application/json',
+			'Content-type': contentType,
 		},
 		withCredentials: true,
 	})

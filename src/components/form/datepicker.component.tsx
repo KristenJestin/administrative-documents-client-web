@@ -29,8 +29,8 @@ const DatePicker = React.forwardRef<Flatpickr, DatePickerProps>(
 			name={name}
 			className={`input ${error !== undefined ? 'is-danger' : ''}`}
 			placeholder={placeholder}
-			onChange={onChange}
 			onClose={onBlur}
+			onValueUpdate={onChange}
 			value={value}
 			options={{
 				...{

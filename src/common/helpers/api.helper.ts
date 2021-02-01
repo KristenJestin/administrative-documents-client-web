@@ -24,5 +24,20 @@ const jsonRequest = <T>(
 		data,
 	})
 
+const fromDataRequest = <T>(
+	method: Method,
+	url: string,
+	data: FormData,
+	version: boolean = true,
+	requireAuth: boolean = true
+): Promise<AxiosResponse<SuccessResponse<T>>> =>
+	http(version, requireAuth, 'multipart/form-data').request<
+		SuccessResponse<T>
+	>({
+		method,
+		url,
+		data,
+	})
+
 // exports
-export { queryRequest, jsonRequest }
+export { queryRequest, jsonRequest, fromDataRequest }

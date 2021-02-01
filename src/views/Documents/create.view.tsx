@@ -1,6 +1,7 @@
 // imports
 import React, { useState, useEffect } from 'react'
 import { Controller, FieldError, FormProvider, useForm } from 'react-hook-form'
+import { useAlert } from 'react-alert'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { startOfToday } from 'date-fns'
 
@@ -20,10 +21,15 @@ import {
 } from '../../models/document/create-document.model'
 import DocumentType from '../../models/document-type/document-type.model'
 import DocumentTypeService from '../../services/document-type.service'
+import { convertObjectToFormdata } from '../../common/helpers/formdata.helper'
+import service from '../../services/document.service'
+import { ErrorResponse } from '../../models/response.model'
+import { AxiosError } from 'axios'
 
 // main
 const CreateDocument = (): React.ReactElement => {
 	// hooks
+	const alert = useAlert()
 	const methods = useForm<CreateDocumentData>({
 		mode: 'onBlur',
 		resolver: yupResolver(createDocumentSchema),
@@ -38,7 +44,7 @@ const CreateDocument = (): React.ReactElement => {
 	const [documentTypes, setDocumentTypes] = useState<DocumentType[]>([])
 
 	// data
-	const { control, handleSubmit, errors } = methods
+	const { control, handleSubmit, errors, setError } = methods
 
 	// events
 	useEffect(() => {
@@ -49,8 +55,30 @@ const CreateDocument = (): React.ReactElement => {
 	}, [])
 
 	// methods
-	const onSubmit = (data: CreateDocumentData) => {
-		console.log(data)
+	const onSubmit = async (data: CreateDocumentData) => {
+		try {
+			const response = await service.create(convertObjectToFormdata(data))
+
+			const result = response.data.result
+			alert.success(`Document créé (${result.name})`)
+			// TODO: redirect
+		} catch (error) {
+			const { response }: AxiosError<ErrorResponse> = error
+			alert.error(
+				`Une erreur est survenue dans le traitement du formulaire (${response?.data?.title}).`
+			)
+
+			// check if is validations error
+			if (response?.status === 422 && response?.data.validationErrors) {
+				const validationErrors = response?.data.validationErrors
+				for (const element of validationErrors) {
+					setError(element.name.toLowerCase(), {
+						type: 'manual',
+						message: element.reason,
+					})
+				}
+			}
+		}
 	}
 
 	// render
