@@ -1,7 +1,7 @@
 // imports
 import React, { useState, useEffect } from 'react'
 import { AxiosError } from 'axios'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { Controller, FieldError, FormProvider, useForm } from 'react-hook-form'
 import { useAlert } from 'react-alert'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -60,9 +60,11 @@ const CreateDocument = (): React.ReactElement => {
 	// methods
 	const onSubmit = async (data: CreateDocumentData) => {
 		try {
-			const response = await service.create(convertObjectToFormdata(data))
+			console.log(data)
 
-			const result = response.data.result
+			const response = await service.create(convertObjectToFormdata(data))
+			const { result } = response.data
+
 			alert.success(`Document créé (${result.name})`)
 			history.push(AppRoute.DOCUMENTS)
 		} catch (error) {
@@ -226,11 +228,11 @@ const CreateDocument = (): React.ReactElement => {
 							<div className="level-right">
 								<div className="field is-grouped">
 									<div className="control">
-										<button
-											type="button"
+										<Link
+											to={AppRoute.DOCUMENTS}
 											className="button is-link is-light">
 											Annuler
-										</button>
+										</Link>
 									</div>
 									<div className="control">
 										<button

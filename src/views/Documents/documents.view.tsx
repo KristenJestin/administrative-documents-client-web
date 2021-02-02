@@ -1,8 +1,10 @@
 // imports
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 import MainContainer from '../../components/main-container.component'
 import Document from '../../models/document/document.model'
+import AppRoute from '../../navigations/app-routes'
 import service from '../../services/document.service'
 
 // config
@@ -32,7 +34,15 @@ const Documents = (): React.ReactElement => {
 
 	// render
 	return (
-		<MainContainer title="Derniers Documents">
+		<MainContainer
+			title="Derniers Documents"
+			right={
+				<Link
+					to={AppRoute.DOCUMENT_CREATE}
+					className="button is-primary">
+					Ajouter un document
+				</Link>
+			}>
 			<div>
 				{pageState.loading && (
 					<div className="is-center mt-6">
