@@ -57,12 +57,14 @@ const Documents = (): React.ReactElement => {
 											<strong className="mr-2">
 												{doc.name}
 											</strong>
-											<small>
-												<a
-													href={doc.type.id.toString()}>
-													{doc.type.name}
-												</a>
-											</small>
+											{doc.type && (
+												<small>
+													<a
+														href={doc.type.id.toString()}>
+														{doc.type.name}
+													</a>
+												</small>
+											)}
 											<br />
 											{doc.note || <i>aucune note</i>}
 										</p>

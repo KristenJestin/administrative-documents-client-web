@@ -1,5 +1,7 @@
 // imports
 import React, { useState, useEffect } from 'react'
+import { AxiosError } from 'axios'
+import { useHistory } from 'react-router-dom'
 import { Controller, FieldError, FormProvider, useForm } from 'react-hook-form'
 import { useAlert } from 'react-alert'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -24,12 +26,13 @@ import DocumentTypeService from '../../services/document-type.service'
 import { convertObjectToFormdata } from '../../common/helpers/formdata.helper'
 import service from '../../services/document.service'
 import { ErrorResponse } from '../../models/response.model'
-import { AxiosError } from 'axios'
+import AppRoute from '../../navigations/app-routes'
 
 // main
 const CreateDocument = (): React.ReactElement => {
 	// hooks
 	const alert = useAlert()
+	const history = useHistory()
 	const methods = useForm<CreateDocumentData>({
 		mode: 'onBlur',
 		resolver: yupResolver(createDocumentSchema),
@@ -61,7 +64,7 @@ const CreateDocument = (): React.ReactElement => {
 
 			const result = response.data.result
 			alert.success(`Document créé (${result.name})`)
-			// TODO: redirect
+			history.push(AppRoute.DOCUMENTS)
 		} catch (error) {
 			const { response }: AxiosError<ErrorResponse> = error
 			alert.error(
