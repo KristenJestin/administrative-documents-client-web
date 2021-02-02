@@ -1,5 +1,5 @@
 // imports
-import React, { useState } from 'react'
+import React from 'react'
 import Flatpickr from 'react-flatpickr'
 import flatpickr from 'flatpickr'
 import { French } from 'flatpickr/dist/l10n/fr'

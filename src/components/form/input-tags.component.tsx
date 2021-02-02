@@ -1,5 +1,5 @@
 // imports
-import React, { ChangeEvent, FocusEvent } from 'react'
+import React, { FocusEvent } from 'react'
 import TagsInput, { RenderTagProps, RenderInputProps } from 'react-tagsinput'
 
 import DefaultElementProps from './default.props'

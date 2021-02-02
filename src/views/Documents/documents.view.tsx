@@ -82,22 +82,25 @@ const Documents = (): React.ReactElement => {
 									<nav className="level is-mobile">
 										<div className="level-left">
 											<div className="tags">
+												{/* TODO: transform to link */}
 												{doc.tags?.map((tag, index) => (
-													<a
+													<span
 														key={index}
 														className="tag is-primary">
 														{tag.name}
-													</a>
+													</span>
 												))}
 											</div>
 										</div>
+
+										{/* TODO: transform to link */}
 										<div className="level-right">
-											<a className="level-item button is-light">
+											<span className="level-item button is-light">
 												Afficher le dossier
-											</a>
-											<a className="level-item button is-link">
+											</span>
+											<span className="level-item button is-link">
 												Détails
-											</a>
+											</span>
 										</div>
 									</nav>
 								</div>
