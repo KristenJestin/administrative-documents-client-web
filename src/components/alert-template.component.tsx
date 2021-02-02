@@ -1,6 +1,8 @@
+// imports
 import React from 'react'
 import { AlertComponentPropsWithStyle, AlertType, types } from 'react-alert'
 
+// main
 const AlertTemplate: React.FunctionComponent<AlertComponentPropsWithStyle> = ({
 	style,
 	options,
@@ -35,4 +37,5 @@ const AlertTemplate: React.FunctionComponent<AlertComponentPropsWithStyle> = ({
 	)
 }
 
+//exports
 export default AlertTemplate

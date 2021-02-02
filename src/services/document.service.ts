@@ -1,6 +1,7 @@
 // imports
 import { AxiosResponse } from 'axios'
-import { jsonRequest } from '../common/helpers/api.helper'
+
+import { fromDataRequest, jsonRequest } from '../common/helpers/api.helper'
 import { UrlJoin } from '../common/helpers/url.helper'
 import Document from '../models/document/document.model'
 import { SuccessResponse } from '../models/response.model'
@@ -15,6 +16,11 @@ const find = (id: number): Promise<AxiosResponse<SuccessResponse<Document>>> =>
 const latest = (): Promise<AxiosResponse<SuccessResponse<Document[]>>> =>
 	jsonRequest('GET', UrlJoin(url, 'latest'))
 
+const create = (
+	data: FormData
+): Promise<AxiosResponse<SuccessResponse<Document>>> =>
+	fromDataRequest('POST', url, data)
+
 // exports
-const service = { find, latest }
+const service = { find, latest, create }
 export default service

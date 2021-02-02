@@ -17,3 +17,27 @@
 		color: $danger;
 	}
 }
+
+.input {
+	.tags-input {
+		@extend %input;
+		background-color: transparent !important;
+		border-color: transparent !important;
+		border: 0;
+		box-shadow: none !important;
+		width: 100%;
+		padding-left: 0;
+	}
+}
+
+.file {
+	.file-label {
+		width: 100%;
+
+		.file-name {
+			width: 100%;
+			max-width: 100%;
+			background-color: $white;
+		}
+	}
+}

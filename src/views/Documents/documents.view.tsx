@@ -1,8 +1,10 @@
 // imports
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 import MainContainer from '../../components/main-container.component'
 import Document from '../../models/document/document.model'
+import AppRoute from '../../navigations/app-routes'
 import service from '../../services/document.service'
 
 // config
@@ -32,7 +34,15 @@ const Documents = (): React.ReactElement => {
 
 	// render
 	return (
-		<MainContainer title="Derniers Documents">
+		<MainContainer
+			title="Derniers Documents"
+			right={
+				<Link
+					to={AppRoute.DOCUMENT_CREATE}
+					className="button is-primary">
+					Ajouter un document
+				</Link>
+			}>
 			<div>
 				{pageState.loading && (
 					<div className="is-center mt-6">
@@ -57,12 +67,14 @@ const Documents = (): React.ReactElement => {
 											<strong className="mr-2">
 												{doc.name}
 											</strong>
-											<small>
-												<a
-													href={doc.type.id.toString()}>
-													{doc.type.name}
-												</a>
-											</small>
+											{doc.type && (
+												<small>
+													<a
+														href={doc.type.id.toString()}>
+														{doc.type.name}
+													</a>
+												</small>
+											)}
 											<br />
 											{doc.note || <i>aucune note</i>}
 										</p>
@@ -70,22 +82,25 @@ const Documents = (): React.ReactElement => {
 									<nav className="level is-mobile">
 										<div className="level-left">
 											<div className="tags">
+												{/* TODO: transform to link */}
 												{doc.tags?.map((tag, index) => (
-													<a
+													<span
 														key={index}
 														className="tag is-primary">
 														{tag.name}
-													</a>
+													</span>
 												))}
 											</div>
 										</div>
+
+										{/* TODO: transform to link */}
 										<div className="level-right">
-											<a className="level-item button is-light">
+											<span className="level-item button is-light">
 												Afficher le dossier
-											</a>
-											<a className="level-item button is-link">
+											</span>
+											<span className="level-item button is-link">
 												Détails
-											</a>
+											</span>
 										</div>
 									</nav>
 								</div>
