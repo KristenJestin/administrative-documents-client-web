@@ -1,9 +1,11 @@
 // imports
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useAlert } from 'react-alert'
+import { useHistory, useParams } from 'react-router-dom'
 
 import MainContainer from '../../components/main-container.component'
 import Document from '../../models/document/document.model'
+import AppRoute from '../../navigations/app-routes'
 import service from '../../services/document.service'
 
 // config
@@ -19,6 +21,8 @@ interface ParamTypes {
 
 const Show = (): React.ReactElement => {
 	// hooks
+	const alert = useAlert()
+	const history = useHistory()
 	const { id } = useParams<ParamTypes>()
 	const [pageState, setPageState] = useState<ShowState>({
 		loading: true,
@@ -26,35 +30,82 @@ const Show = (): React.ReactElement => {
 
 	// events
 	useEffect(() => {
-		const wait = (delay: number) =>
-			new Promise((resolve) => setTimeout(resolve, delay))
-
 		;(async () => {
-			const doc = (await service.find(parseInt(id))).data.result
-			await wait(4000)
-
-			setPageState(() => ({
-				document: doc,
-				loading: false,
-			}))
+			try {
+				const doc = (await service.find(parseInt(id))).data.result
+				setPageState(() => ({
+					document: doc,
+					loading: false,
+				}))
+			} catch (error) {
+				alert?.error("Le document n'a pas été trouvé.")
+				history.push(AppRoute.HOME)
+			}
 		})()
-	}, [id])
+	}, [id, alert, history])
+
+	// methods
+	const renderDocument = () => {
+		if (!pageState.document) return undefined
+
+		const { document } = pageState
+		return (
+			<>
+				<div>
+					<div className="level">
+						<div className="level-left">
+							{document.type && (
+								<small className="mb-3">
+									<b>Type : </b>
+									<a href={document.type.id.toString()}>
+										{document.type.name}
+									</a>
+								</small>
+							)}
+
+							<div>
+								<div className="tags">
+									{/* TODO: transform to link */}
+									{document.tags?.map((tag, index) => (
+										<span
+											key={index}
+											className="tag is-primary">
+											{tag.name}
+										</span>
+									))}
+								</div>
+							</div>
+						</div>
+
+						<div className="level-right"></div>
+					</div>
+
+					{document.note && (
+						<div className="mt-5">
+							<h4 className="title is-4 mb-0">Note</h4>
+							<p>{document.note}</p>
+						</div>
+					)}
+				</div>
+			</>
+		)
+	}
 
 	// render
 	return (
 		<MainContainer
-			title={`Détails du document "${
+			title={`Détails du document ${
 				!pageState.loading && pageState.document
-					? pageState.document.name
-					: '...'
-			}"`}>
+					? `"${pageState.document.name}"`
+					: ''
+			}`}>
 			<div>
 				{pageState.loading && (
 					<div className="is-center mt-6">
 						<div className="loader"></div>
 					</div>
 				)}
-				<h2>DOCUMENTS</h2>
+				{renderDocument()}
 			</div>
 		</MainContainer>
 	)
