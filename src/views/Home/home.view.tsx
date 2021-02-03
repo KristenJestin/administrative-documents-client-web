@@ -98,9 +98,14 @@ const Home = (): React.ReactElement => {
 											<span className="level-item button is-light">
 												Afficher le dossier
 											</span>
-											<span className="level-item button is-link">
+											<Link
+												to={AppRoute.DOCUMENT_SHOW.replace(
+													':id',
+													doc.id.toString()
+												).replace('(\\d+)', '')}
+												className="level-item button is-link">
 												Détails
-											</span>
+											</Link>
 										</div>
 									</nav>
 								</div>
