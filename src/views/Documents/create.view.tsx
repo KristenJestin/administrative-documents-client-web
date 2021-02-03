@@ -29,7 +29,7 @@ import { ErrorResponse } from '../../models/response.model'
 import AppRoute from '../../navigations/app-routes'
 
 // main
-const CreateDocument = (): React.ReactElement => {
+const Create = (): React.ReactElement => {
 	// hooks
 	const alert = useAlert()
 	const history = useHistory()
@@ -252,4 +252,4 @@ const CreateDocument = (): React.ReactElement => {
 }
 
 // exports
-export default CreateDocument
+export default Create

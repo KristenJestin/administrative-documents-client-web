@@ -1,6 +1,13 @@
 // imports
-import Documents from './documents.view'
-import CreateDocument from './create.view'
+import List from './list.view'
+import Create from './create.view'
+import Show from './show.view'
+import Latest from './latest.view'
 
 // exports
-export { Documents, CreateDocument }
+export {
+	Latest as LatestDocuments,
+	List as ListDocuments,
+	Create as CreateDocument,
+	Show as ShowDocument,
+}

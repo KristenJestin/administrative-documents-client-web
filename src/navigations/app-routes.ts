@@ -4,6 +4,7 @@ enum AppRoute {
 	LOGIN = '/login',
 	DOCUMENTS = '/documents',
 	DOCUMENT_CREATE = '/documents/new',
+	DOCUMENT_SHOW = '/documents/:id(\\d+)',
 }
 
 // exports
