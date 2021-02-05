@@ -4,6 +4,7 @@ import Create from './create.view'
 import Show from './show.view'
 import Latest from './latest.view'
 import Search from './search.view'
+import Type from './type.view'
 
 // exports
 export {
@@ -12,4 +13,5 @@ export {
 	Create as CreateDocument,
 	Show as ShowDocument,
 	Search as SearchDocuments,
+	Type as SearchDocumentsWithType,
 }

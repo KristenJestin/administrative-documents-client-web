@@ -8,6 +8,7 @@ import {
 	ListDocuments,
 	ShowDocument,
 	SearchDocuments,
+	SearchDocumentsWithType,
 } from '../views/Documents'
 
 // main
@@ -48,6 +49,11 @@ const routes: RouteProps[] = [
 		component: SearchDocuments,
 		path: AppRoute.DOCUMENTS_SEARCH,
 		name: 'Search Documents',
+	},
+	{
+		component: SearchDocumentsWithType,
+		path: AppRoute.DOCUMENTS_SEARCH_TYPE,
+		name: 'Search Documents with type',
 	},
 ]
 

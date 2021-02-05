@@ -2,7 +2,6 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { isEmptyOrSpaces } from '../common/helpers/text.helper'
-import { UrlJoin } from '../common/helpers/url.helper'
 import AppRoute from '../navigations/app-routes'
 
 // main
@@ -33,6 +32,9 @@ const SearchBar = ({
 					placeholder="Rechercher un document"
 					value={search}
 					onChange={(e) => setSearch(e.target.value)}
+					onKeyDown={(e) => {
+						if (e.key === 'Enter') onSubmit()
+					}}
 				/>
 			</p>
 			<p className="control">

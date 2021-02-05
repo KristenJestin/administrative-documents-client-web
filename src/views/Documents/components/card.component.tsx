@@ -39,7 +39,13 @@ const DocumentCard = ({
 							<strong className="mr-2">{name}</strong>
 							{type && (
 								<small>
-									<a href={type.id.toString()}>{type.name}</a>
+									<Link
+										to={AppRoute.DOCUMENTS_SEARCH_TYPE.replace(
+											':type',
+											type.id.toString()
+										).replace('(\\d+)', '')}>
+										{type.name}
+									</Link>
 								</small>
 							)}
 							<br />

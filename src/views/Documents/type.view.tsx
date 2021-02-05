@@ -1,13 +1,14 @@
 // imports
 import React, { useState, useEffect } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import MainContainer from '../../components/main-container.component'
 import SearchBar from '../../components/search-bar.component'
 import Document from '../../models/document/document.model'
-import AppRoute from '../../navigations/app-routes'
 import service from '../../services/document.service'
+import documentTypeService from '../../services/document-type.service'
 import DocumentCard from './components/card.component'
+import DocumentType from '../../models/document-type/document-type.model'
 
 // config
 type SearchState = {
@@ -17,39 +18,40 @@ type SearchState = {
 
 // main
 interface ParamTypes {
-	search: string
+	type: string
 }
 
-const Search = (): React.ReactElement => {
+const Type = (): React.ReactElement => {
 	// hooks
-	const history = useHistory()
-	const { search } = useParams<ParamTypes>()
+	const { type } = useParams<ParamTypes>()
 	const [pageState, setPageState] = useState<SearchState>({
 		documents: [],
 		loading: true,
 	})
+	const [documentType, setDocumentType] = useState<DocumentType>()
 
 	// actions
 	useEffect(() => {
 		;(async () => {
-			if (!search) {
-				history.push(AppRoute.DOCUMENTS)
-				return
-			}
-
-			const docs = (await service.search({ term: search })).data.result
+			const docs = (await service.search({ type: parseInt(type) })).data
+				.result
 			setPageState(() => ({
 				documents: docs,
 				loading: false,
 			}))
+
+			setDocumentType(
+				(await documentTypeService.find(parseInt(type))).data.result
+			)
 		})()
-	}, [history, search])
+	}, [type])
 
 	// render
 	return (
-		<MainContainer title={`Recherche Documents "${search}"`}>
+		<MainContainer
+			title={`Documents par type "${documentType?.name || '...'}"`}>
 			<div className="mb-6">
-				<SearchBar defaultSearch={search} />
+				<SearchBar defaultSearch="" />
 			</div>
 			<div>
 				{pageState.loading && (
@@ -73,4 +75,4 @@ const Search = (): React.ReactElement => {
 }
 
 // exports
-export default Search
+export default Type
