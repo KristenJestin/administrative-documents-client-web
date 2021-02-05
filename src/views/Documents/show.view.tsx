@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
 import { useHistory, useParams } from 'react-router-dom'
+import fileDownload from 'js-file-download'
 
 import MainContainer from '../../components/main-container.component'
 import Document from '../../models/document/document.model'
@@ -45,6 +46,22 @@ const Show = (): React.ReactElement => {
 	}, [id, alert, history])
 
 	// methods
+	const download = async () => {
+		if (pageState.document && pageState.document.file) {
+			const { document } = pageState
+			const response = await service.download(document.id)
+
+			fileDownload(
+				response.data,
+				`${document.name}${document.file.extension}`
+			)
+		} else {
+			alert.error(
+				'Une erreur est survenue lors de la génération du fichier.'
+			)
+		}
+	}
+
 	const renderDocument = () => {
 		if (!pageState.document) return undefined
 
@@ -53,15 +70,17 @@ const Show = (): React.ReactElement => {
 			<>
 				<div>
 					<div className="level">
-						<div className="level-left">
-							{document.type && (
-								<small className="mb-3">
-									<b>Type : </b>
-									<a href={document.type.id.toString()}>
-										{document.type.name}
-									</a>
-								</small>
-							)}
+						<div className="level-left is-flex-direction-column is-align-items-flex-start">
+							<div className="mb-3">
+								{document.type && (
+									<small>
+										<b>Type : </b>
+										<a href={document.type.id.toString()}>
+											{document.type.name}
+										</a>
+									</small>
+								)}
+							</div>
 
 							<div>
 								<div className="tags">
@@ -77,7 +96,13 @@ const Show = (): React.ReactElement => {
 							</div>
 						</div>
 
-						<div className="level-right"></div>
+						<div className="level-right">
+							<button
+								onClick={download}
+								className="button is-link">
+								Télécharger
+							</button>
+						</div>
 					</div>
 
 					{document.note && (
