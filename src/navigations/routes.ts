@@ -3,7 +3,12 @@ import { RouteComponentProps } from 'react-router-dom'
 import { Home } from '../views/Home'
 import { Login } from '../views/Auth'
 import AppRoute from './app-routes'
-import { CreateDocument, ListDocuments, ShowDocument } from '../views/Documents'
+import {
+	CreateDocument,
+	ListDocuments,
+	ShowDocument,
+	SearchDocuments,
+} from '../views/Documents'
 
 // main
 type RouteProps = {
@@ -38,6 +43,11 @@ const routes: RouteProps[] = [
 		component: ShowDocument,
 		path: AppRoute.DOCUMENT_SHOW,
 		name: 'Show Document',
+	},
+	{
+		component: SearchDocuments,
+		path: AppRoute.DOCUMENTS_SEARCH,
+		name: 'Search Documents',
 	},
 ]
 

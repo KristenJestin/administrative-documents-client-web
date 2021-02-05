@@ -1,6 +1,6 @@
 // imports
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 
 import MainContainer from '../../components/main-container.component'
 import SearchBar from '../../components/search-bar.component'
@@ -10,15 +10,21 @@ import service from '../../services/document.service'
 import DocumentCard from './components/card.component'
 
 // config
-type HomeState = {
+type SearchState = {
 	documents: Document[]
 	loading: boolean
 }
 
 // main
-const Latest = (): React.ReactElement => {
+interface ParamTypes {
+	search: string
+}
+
+const Search = (): React.ReactElement => {
 	// hooks
-	const [pageState, setPageState] = useState<HomeState>({
+	const history = useHistory()
+	const { search } = useParams<ParamTypes>()
+	const [pageState, setPageState] = useState<SearchState>({
 		documents: [],
 		loading: true,
 	})
@@ -26,27 +32,25 @@ const Latest = (): React.ReactElement => {
 	// actions
 	useEffect(() => {
 		;(async () => {
-			const docs = (await service.latest()).data.result
+			if (!search) {
+				history.push(AppRoute.DOCUMENTS)
+				return
+			}
+
+			const docs = (await service.search({ term: search })).data.result
 			setPageState(() => ({
 				documents: docs,
 				loading: false,
 			}))
 		})()
-	}, [])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [search])
 
 	// render
 	return (
-		<MainContainer
-			title="Derniers Documents"
-			right={
-				<Link
-					to={AppRoute.DOCUMENT_CREATE}
-					className="button is-primary">
-					Ajouter un document
-				</Link>
-			}>
+		<MainContainer title={`Recherche Documents "${search}"`}>
 			<div className="mb-6">
-				<SearchBar defaultSearch="" />
+				<SearchBar defaultSearch={search} />
 			</div>
 			<div>
 				{pageState.loading && (
@@ -70,4 +74,4 @@ const Latest = (): React.ReactElement => {
 }
 
 // exports
-export default Latest
+export default Search
