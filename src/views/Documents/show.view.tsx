@@ -1,7 +1,7 @@
 // imports
 import React, { useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
-import { useHistory, useParams } from 'react-router-dom'
+import { Link, useHistory, useParams } from 'react-router-dom'
 import fileDownload from 'js-file-download'
 
 import MainContainer from '../../components/main-container.component'
@@ -75,9 +75,13 @@ const Show = (): React.ReactElement => {
 								{document.type && (
 									<small>
 										<b>Type : </b>
-										<a href={document.type.id.toString()}>
+										<Link
+											to={AppRoute.DOCUMENTS_SEARCH_TYPE.replace(
+												':type',
+												document.type.id.toString()
+											).replace('(\\d+)', '')}>
 											{document.type.name}
-										</a>
+										</Link>
 									</small>
 								)}
 							</div>
@@ -86,11 +90,15 @@ const Show = (): React.ReactElement => {
 								<div className="tags">
 									{/* TODO: transform to link */}
 									{document.tags?.map((tag, index) => (
-										<span
+										<Link
+											to={AppRoute.DOCUMENTS_SEARCH_TAG.replace(
+												':tag',
+												tag.slug
+											)}
 											key={index}
 											className="tag is-primary">
 											{tag.name}
-										</span>
+										</Link>
 									))}
 								</div>
 							</div>
