@@ -21,7 +21,7 @@ interface ParamTypes {
 	type: string
 }
 
-const Type = (): React.ReactElement => {
+const SearchWithType = (): React.ReactElement => {
 	// hooks
 	const { type } = useParams<ParamTypes>()
 	const [pageState, setPageState] = useState<SearchState>({
@@ -46,6 +46,32 @@ const Type = (): React.ReactElement => {
 		})()
 	}, [type])
 
+	// methods
+	const renderDocuments = () => {
+		const { loading, documents } = pageState
+
+		if (!loading) {
+			if (!loading && documents.length === 0) {
+				return (
+					<p className="has-text-grey is-italic has-text-centered">
+						Aucun document trouvé
+					</p>
+				)
+			} else {
+				return documents?.map((doc, index) => (
+					<DocumentCard
+						key={index}
+						id={doc.id}
+						name={doc.name}
+						note={doc.note}
+						type={doc.type}
+						tags={doc.tags}
+					/>
+				))
+			}
+		}
+	}
+
 	// render
 	return (
 		<MainContainer
@@ -59,20 +85,11 @@ const Type = (): React.ReactElement => {
 						<div className="loader"></div>
 					</div>
 				)}
-				{pageState?.documents?.map((doc, index) => (
-					<DocumentCard
-						key={index}
-						id={doc.id}
-						name={doc.name}
-						note={doc.note}
-						type={doc.type}
-						tags={doc.tags}
-					/>
-				))}
+				{renderDocuments()}
 			</div>
 		</MainContainer>
 	)
 }
 
 // exports
-export default Type
+export default SearchWithType

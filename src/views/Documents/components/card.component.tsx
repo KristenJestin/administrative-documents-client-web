@@ -57,11 +57,15 @@ const DocumentCard = ({
 							<div className="tags">
 								{/* TODO: transform to link */}
 								{tags?.map((tag, index) => (
-									<span
+									<Link
+										to={AppRoute.DOCUMENTS_SEARCH_TAG.replace(
+											':tag',
+											tag.slug
+										)}
 										key={index}
 										className="tag is-primary">
 										{tag.name}
-									</span>
+									</Link>
 								))}
 							</div>
 						</div>

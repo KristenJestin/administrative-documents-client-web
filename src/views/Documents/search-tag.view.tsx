@@ -1,13 +1,14 @@
 // imports
 import React, { useState, useEffect } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import MainContainer from '../../components/main-container.component'
 import SearchBar from '../../components/search-bar.component'
 import Document from '../../models/document/document.model'
-import AppRoute from '../../navigations/app-routes'
 import service from '../../services/document.service'
+import documentTagService from '../../services/document-tag.service'
 import DocumentCard from './components/card.component'
+import DocumentTag from '../../models/document-tag/document-tag.model'
 
 // config
 type SearchState = {
@@ -17,33 +18,32 @@ type SearchState = {
 
 // main
 interface ParamTypes {
-	search: string
+	tag: string
 }
 
-const Search = (): React.ReactElement => {
+const SearchWithTag = (): React.ReactElement => {
 	// hooks
-	const history = useHistory()
-	const { search } = useParams<ParamTypes>()
+	const { tag } = useParams<ParamTypes>()
 	const [pageState, setPageState] = useState<SearchState>({
 		documents: [],
 		loading: true,
 	})
+	const [documentTag, setDocumentTag] = useState<DocumentTag>()
 
 	// actions
 	useEffect(() => {
 		;(async () => {
-			if (!search) {
-				history.push(AppRoute.DOCUMENTS)
-				return
-			}
-
-			const docs = (await service.search({ term: search })).data.result
+			const docs = (await service.search({ tag })).data.result
 			setPageState(() => ({
 				documents: docs,
 				loading: false,
 			}))
+
+			setDocumentTag(
+				(await documentTagService.findBySlug(tag)).data.result
+			)
 		})()
-	}, [history, search])
+	}, [tag])
 
 	// methods
 	const renderDocuments = () => {
@@ -73,9 +73,10 @@ const Search = (): React.ReactElement => {
 
 	// render
 	return (
-		<MainContainer title={`Recherche Documents "${search}"`}>
+		<MainContainer
+			title={`Documents par tag "${documentTag?.name || '...'}"`}>
 			<div className="mb-6">
-				<SearchBar defaultSearch={search} />
+				<SearchBar defaultSearch="" />
 			</div>
 			<div>
 				{pageState.loading && (
@@ -90,4 +91,4 @@ const Search = (): React.ReactElement => {
 }
 
 // exports
-export default Search
+export default SearchWithTag

@@ -7,6 +7,7 @@ enum AppRoute {
 	DOCUMENT_SHOW = '/documents/:id(\\d+)',
 	DOCUMENTS_SEARCH = '/documents/search/:search',
 	DOCUMENTS_SEARCH_TYPE = '/documents/types/:type(\\d+)',
+	DOCUMENTS_SEARCH_TAG = '/documents/tags/:tag',
 }
 
 // exports

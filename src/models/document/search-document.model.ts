@@ -2,7 +2,7 @@
 type SearchDocumentProps = {
 	term?: string
 	type?: number
-	slug?: string
+	tag?: string
 }
 
 // exports
