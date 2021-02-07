@@ -5,7 +5,6 @@ import {
 	Redirect,
 	Route,
 	Switch,
-	useHistory,
 } from 'react-router-dom'
 
 import routes from './routes'

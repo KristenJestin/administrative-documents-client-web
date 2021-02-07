@@ -1,24 +1,32 @@
 // imports
-import axios, { AxiosInstance, AxiosResponse } from 'axios'
+import axios, { AxiosInstance, ResponseType } from 'axios'
 import { getAuthenticateToken } from '../services/auth.service'
 import { storeAuthenticateToken } from '../services/auth.service'
 import { UrlJoin } from './helpers/url.helper'
-import { SuccessResponse } from '../models/response.model'
-import { AuthenticateResponse } from '../models/account'
 
 // main
-const http = (
-	version: boolean = true,
-	requireAuth: boolean = true
-): AxiosInstance => {
+type httpProps = {
+	version?: boolean
+	requireAuth?: boolean
+	contentType?: string
+	responseType?: ResponseType
+}
+
+const http = ({
+	version = true,
+	requireAuth = true,
+	contentType = 'application/json',
+	responseType = 'json',
+}: httpProps): AxiosInstance => {
 	const instance = axios.create({
 		baseURL: UrlJoin(
 			process.env.REACT_APP_API_URL,
 			version ? process.env.REACT_APP_API_VERSION : ''
 		),
 		headers: {
-			'Content-type': 'application/json',
+			'Content-type': contentType,
 		},
+		responseType,
 		withCredentials: true,
 	})
 

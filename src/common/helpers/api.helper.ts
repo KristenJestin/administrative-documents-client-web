@@ -9,7 +9,7 @@ const queryRequest = <T>(
 	url: string,
 	params: any
 ): Promise<AxiosResponse<SuccessResponse<T>>> =>
-	http().request<SuccessResponse<T>>({ method, url, params })
+	http({}).request<SuccessResponse<T>>({ method, url, params })
 
 const jsonRequest = <T>(
 	method: Method,
@@ -18,11 +18,39 @@ const jsonRequest = <T>(
 	version: boolean = true,
 	requireAuth: boolean = true
 ): Promise<AxiosResponse<SuccessResponse<T>>> =>
-	http(version, requireAuth).request<SuccessResponse<T>>({
+	http({ version, requireAuth }).request<SuccessResponse<T>>({
 		method,
 		url,
 		data,
 	})
 
+const fromDataRequest = <T>(
+	method: Method,
+	url: string,
+	data: FormData,
+	version: boolean = true,
+	requireAuth: boolean = true
+): Promise<AxiosResponse<SuccessResponse<T>>> =>
+	http({ version, requireAuth, contentType: 'multipart/form-data' }).request<
+		SuccessResponse<T>
+	>({
+		method,
+		url,
+		data,
+	})
+
+const downloadRequest = <
+	T extends string | ArrayBuffer | ArrayBufferView | Blob
+>(
+	method: Method,
+	url: string,
+	version: boolean = true,
+	requireAuth: boolean = true
+): Promise<AxiosResponse<T>> =>
+	http({ version, requireAuth, responseType: 'blob' }).request<T>({
+		method,
+		url,
+	})
+
 // exports
-export { queryRequest, jsonRequest }
+export { queryRequest, jsonRequest, fromDataRequest, downloadRequest }

@@ -3,7 +3,14 @@ import { RouteComponentProps } from 'react-router-dom'
 import { Home } from '../views/Home'
 import { Login } from '../views/Auth'
 import AppRoute from './app-routes'
-import { Documents } from '../views/Documents'
+import {
+	CreateDocument,
+	ListDocuments,
+	ShowDocument,
+	SearchDocuments,
+	SearchDocumentsWithType,
+	SearchDocumentsWithTag,
+} from '../views/Documents'
 
 // main
 type RouteProps = {
@@ -25,9 +32,34 @@ const routes: RouteProps[] = [
 		name: 'Login',
 	},
 	{
-		component: Documents,
+		component: ListDocuments,
 		path: AppRoute.DOCUMENTS,
 		name: 'Documents',
+	},
+	{
+		component: CreateDocument,
+		path: AppRoute.DOCUMENT_CREATE,
+		name: 'New Document',
+	},
+	{
+		component: ShowDocument,
+		path: AppRoute.DOCUMENT_SHOW,
+		name: 'Show Document',
+	},
+	{
+		component: SearchDocuments,
+		path: AppRoute.DOCUMENTS_SEARCH,
+		name: 'Search Documents',
+	},
+	{
+		component: SearchDocumentsWithType,
+		path: AppRoute.DOCUMENTS_SEARCH_TYPE,
+		name: 'Search Documents with type',
+	},
+	{
+		component: SearchDocumentsWithTag,
+		path: AppRoute.DOCUMENTS_SEARCH_TAG,
+		name: 'Search Documents with tag',
 	},
 ]
 
