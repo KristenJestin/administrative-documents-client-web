@@ -1,9 +1,15 @@
 // imports
 import { AxiosResponse } from 'axios'
 
-import { fromDataRequest, jsonRequest } from '../common/helpers/api.helper'
+import {
+	queryRequest,
+	fromDataRequest,
+	jsonRequest,
+	downloadRequest,
+} from '../common/helpers/api.helper'
 import { UrlJoin } from '../common/helpers/url.helper'
 import Document from '../models/document/document.model'
+import SearchDocumentProps from '../models/document/search-document.model'
 import { SuccessResponse } from '../models/response.model'
 
 // config
@@ -21,6 +27,14 @@ const create = (
 ): Promise<AxiosResponse<SuccessResponse<Document>>> =>
 	fromDataRequest('POST', url, data)
 
+const download = (id: number): Promise<AxiosResponse<Blob>> =>
+	downloadRequest('GET', UrlJoin(url, id.toString(), 'download'))
+
+const search = (
+	terms: SearchDocumentProps
+): Promise<AxiosResponse<SuccessResponse<Document[]>>> =>
+	queryRequest('GET', UrlJoin(url, 'search'), terms)
+
 // exports
-const service = { find, latest, create }
+const service = { find, latest, create, download, search }
 export default service

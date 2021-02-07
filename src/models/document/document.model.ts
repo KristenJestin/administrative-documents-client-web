@@ -1,4 +1,5 @@
 // imports
+import DocumentFile from '../document-file/document-file.model'
 import DocumentTag from '../document-tag/document-tag.model'
 import DocumentType from '../document-type/document-type.model'
 
@@ -8,8 +9,9 @@ interface Document {
 	name: string
 	fileId: number
 	note: string
-	type: DocumentType
+	type?: DocumentType
 	tags: DocumentTag[]
+	file: DocumentFile
 	amount?: number
 	date?: Date
 	duration?: number

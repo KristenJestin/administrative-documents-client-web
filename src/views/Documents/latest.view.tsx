@@ -3,9 +3,11 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import MainContainer from '../../components/main-container.component'
+import SearchBar from '../../components/search-bar.component'
 import Document from '../../models/document/document.model'
 import AppRoute from '../../navigations/app-routes'
 import service from '../../services/document.service'
+import DocumentCard from './components/card.component'
 
 // config
 type HomeState = {
@@ -43,6 +45,9 @@ const Latest = (): React.ReactElement => {
 					Ajouter un document
 				</Link>
 			}>
+			<div className="mb-6">
+				<SearchBar defaultSearch="" />
+			</div>
 			<div>
 				{pageState.loading && (
 					<div className="is-center mt-6">
@@ -50,68 +55,14 @@ const Latest = (): React.ReactElement => {
 					</div>
 				)}
 				{pageState?.documents?.map((doc, index) => (
-					<div key={index} className="card mb-4">
-						<div className="card-content">
-							<div className="media">
-								<div
-									className="media-left mr-5"
-									style={{
-										marginTop: 'auto',
-										marginBottom: 'auto',
-									}}>
-									<i className="fas fa-file-alt fa-4x" />
-								</div>
-								<div className="media-content">
-									<div className="content">
-										<p>
-											<strong className="mr-2">
-												{doc.name}
-											</strong>
-											{doc.type && (
-												<small>
-													<a
-														href={doc.type.id.toString()}>
-														{doc.type.name}
-													</a>
-												</small>
-											)}
-											<br />
-											{doc.note || <i>aucune note</i>}
-										</p>
-									</div>
-									<nav className="level is-mobile">
-										<div className="level-left">
-											<div className="tags">
-												{/* TODO: transform to link */}
-												{doc.tags?.map((tag, index) => (
-													<span
-														key={index}
-														className="tag is-primary">
-														{tag.name}
-													</span>
-												))}
-											</div>
-										</div>
-
-										{/* TODO: transform to link */}
-										<div className="level-right">
-											<span className="level-item button is-light">
-												Afficher le dossier
-											</span>
-											<Link
-												to={AppRoute.DOCUMENT_SHOW.replace(
-													':id',
-													doc.id.toString()
-												).replace('(\\d+)', '')}
-												className="level-item button is-link">
-												Détails
-											</Link>
-										</div>
-									</nav>
-								</div>
-							</div>
-						</div>
-					</div>
+					<DocumentCard
+						key={index}
+						id={doc.id}
+						name={doc.name}
+						note={doc.note}
+						type={doc.type}
+						tags={doc.tags}
+					/>
 				))}
 			</div>
 		</MainContainer>
