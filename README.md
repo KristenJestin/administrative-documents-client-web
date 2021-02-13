@@ -1,46 +1,106 @@
-# Getting Started with Create React App
+[![Build][build-shield]][build-url]
+[![MIT License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h1 align="center">
+	<b>ADMINISTRATIVE DOCUMENTS</b>
+	<br />
+	<small align="center">Web Client</small>
+</h1>
 
-## Available Scripts
+<details open="open">
+  <summary>Table of Contents</summary>
+<!-- TOC depthfrom:2 -->
 
-In the project directory, you can run:
+-   [.1. About The Project](#1-about-the-project)
+    -   [.1.1. Build with](#11-build-with)
+-   [.2. Getting Started](#2-getting-started)
+    -   [.2.1. Prerequisites](#21-prerequisites)
+    -   [.2.2. Installation](#22-installation)
+-   [.3. Roadmap](#3-roadmap)
+-   [.4. License](#4-license)
+-   [.5. Contact](#5-contact)
 
-### `yarn start`
+<!-- /TOC -->
+</details>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## About The Project
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Web application allowing to store, in a secure way, administrative files (Front End).
 
-### `yarn test`
+![screenshot-home]
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The application allows you to add a document with a name and other optional information such as type, description, tags, date, amount, etc.
 
-### `yarn build`
+All added documents are encrypted using the AES encryption algorithm. They are decrypted on the fly with each download.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![screenshot-create]
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Documents can be found in several ways :
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+-   With the search field
+-   With a type
+-   With a tag
 
-### `yarn eject`
+![screenshot-search]
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+A very simple page allows you to download the document and see most of the information.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![screenshot-details]
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Build with
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+-   [React](https://reactjs.org/)
+-   [TypeScript](https://www.typescriptlang.org/)
+-   [Bulma](https://bulma.io/)
 
-## Learn More
+## Getting Started
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Prerequisites
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+-   yarn
+    ```sh
+    npm install --global yarn
+    ```
+
+### Installation
+
+1. Install the API part [Administrative Documents API](https://github.com/KristenJestin/administrative-documents-api#22-installation)
+2. Clone the repo
+    ```sh
+    git clone https://github.com/KristenJestin/administrative-documents-client-web.git
+    ```
+3. Install packages
+
+    ```sh
+    yarn install
+    ```
+
+## Roadmap
+
+All future features are available on [Trello](https://trello.com/b/RldA4clM/%F0%9F%93%84-administrative-documents).
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+<!-- CONTACT -->
+
+## Contact
+
+Kristen JESTIN - [contact@kristenjestin.fr](mailto:contact@kristenjestin.fr)
+
+Project Link: [https://github.com/KristenJestin/administrative-documents-client-web](https://github.com/KristenJestin/administrative-documents-client-web)
+
+<!-- MARKDOWN LINKS & IMAGES -->
+
+[build-shield]: https://img.shields.io/appveyor/job/build/kristenjestin/administrative-documents-client-web/CI?style=for-the-badge
+[build-url]: https://github.com/KristenJestin/administrative-documents-client-web/actions?query=CI
+[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
+[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/kristen-jestin
+[screenshot-home]: docs/images/screenshot-home.png
+[screenshot-create]: docs/images/screenshot-create.png
+[screenshot-search]: docs/images/screenshot-search.png
+[screenshot-details]: docs/images/screenshot-details.png
