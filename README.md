@@ -102,3 +102,7 @@ Project Link: [https://github.com/KristenJestin/administrative-documents-client-
 [license-url]: https://github.com/KristenJestin/administrative-documents-client-web/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/kristen-jestin
+[screenshot-home]: docs/images/screenshot-home.png
+[screenshot-create]: docs/images/screenshot-create.png
+[screenshot-search]: docs/images/screenshot-search.png
+[screenshot-details]: docs/images/screenshot-details.png
