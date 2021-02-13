@@ -3,9 +3,9 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 <h1 align="center">
-	<b>Administrative Documents</b>
+	<b>ADMINISTRATIVE DOCUMENTS</b>
 	<br />
-	<small align="center">WEB CLIENT</small>
+	<small align="center">Web Client</small>
 </h1>
 
 <details open="open">
