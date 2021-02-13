@@ -95,7 +95,7 @@ Project Link: [https://github.com/KristenJestin/administrative-documents-client-
 <!-- MARKDOWN LINKS & IMAGES -->
 
 [build-shield]: https://img.shields.io/github/workflow/status/KristenJestin/administrative-documents-client-web/CI?style=for-the-badge
-[build-url]: https://github.com/KristenJestin/administrative-documents-client-web/actions?query=CI
+[build-url]: https://github.com/KristenJestin/administrative-documents-client-web/actions?query=workflow:CI
 [license-shield]: https://img.shields.io/github/license/KristenJestin/administrative-documents-client-web.svg?style=for-the-badge
 [license-url]: https://github.com/KristenJestin/administrative-documents-client-web/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
