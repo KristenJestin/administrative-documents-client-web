@@ -12,14 +12,14 @@
   <summary>Table of Contents</summary>
 <!-- TOC depthfrom:2 -->
 
--   [.1. About The Project](#1-about-the-project)
-    -   [.1.1. Build with](#11-build-with)
--   [.2. Getting Started](#2-getting-started)
-    -   [.2.1. Prerequisites](#21-prerequisites)
-    -   [.2.2. Installation](#22-installation)
--   [.3. Roadmap](#3-roadmap)
--   [.4. License](#4-license)
--   [.5. Contact](#5-contact)
+-   [About The Project](#about-the-project)
+    -   [Build with](#build-with)
+-   [Getting Started](#getting-started)
+    -   [Prerequisites](#prerequisites)
+    -   [Installation](#installation)
+-   [Roadmap](#roadmap)
+-   [License](#license)
+-   [Contact](#contact)
 
 <!-- /TOC -->
 </details>
@@ -27,6 +27,8 @@
 ## About The Project
 
 Web application allowing to store, in a secure way, administrative files (Front End).
+
+[Back End](https://github.com/KristenJestin/administrative-documents-api)
 
 ![screenshot-home]
 
@@ -65,7 +67,7 @@ A very simple page allows you to download the document and see most of the infor
 
 ### Installation
 
-1. Install the API part [Administrative Documents API](https://github.com/KristenJestin/administrative-documents-api#22-installation)
+1. Install the API part [Administrative Documents API](https://github.com/KristenJestin/administrative-documents-client-web#installation)
 2. Clone the repo
     ```sh
     git clone https://github.com/KristenJestin/administrative-documents-client-web.git
@@ -95,9 +97,9 @@ Project Link: [https://github.com/KristenJestin/administrative-documents-client-
 <!-- MARKDOWN LINKS & IMAGES -->
 
 [build-shield]: https://img.shields.io/github/workflow/status/KristenJestin/administrative-documents-client-web/CI?style=for-the-badge
-[build-url]: https://github.com/KristenJestin/administrative-documents-client-web/actions?query=CI
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
+[build-url]: https://github.com/KristenJestin/administrative-documents-client-web/actions?query=workflow:CI
+[license-shield]: https://img.shields.io/github/license/KristenJestin/administrative-documents-client-web.svg?style=for-the-badge
+[license-url]: https://github.com/KristenJestin/administrative-documents-client-web/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/kristen-jestin
 [screenshot-home]: docs/images/screenshot-home.png
